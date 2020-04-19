@@ -10,4 +10,4 @@ Implement a NetworkImageView prgrammatically or as an IBOutlet. NetworkImageView
 
 to load the image pass the url as a string, the string is an optional in case the you are using a table or something that recycles if one item of the list doesn't a url pass nil 
 
-imageView.loadImage(with: urlString, placeholder: nil)
+imageView.load(with: urlString, placeholder: nil)

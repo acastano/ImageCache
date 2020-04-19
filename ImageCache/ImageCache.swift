@@ -72,19 +72,17 @@ final class ImageCache: NSObject, URLSessionDelegate {
 
     private func processRemoteOperation(_ operation: Operation, url: URL, path: String, completion: ImageCompletion?) {
         remoteData(url, path: path) { [weak self] data in
-            if let instance = self {
-                if operation.isCancelled == false {
-                    instance.lock.lock()
-                    var image: UIImage?
-                    if let data = data {
-                        image = instance.imageWithData(data, removeIfInvalid: path)
-                    }
-                    DispatchQueue.main.async {
-                        completion?(image, url)
-                    }
-                    instance.downloadingURLs.removeObject(forKey: path)
-                    instance.lock.unlock()
+            if let instance = self, operation.isCancelled == false {
+                instance.lock.lock()
+                var image: UIImage?
+                if let data = data {
+                    image = instance.imageWithData(data, removeIfInvalid: path)
                 }
+                DispatchQueue.main.async {
+                    completion?(image, url)
+                }
+                instance.downloadingURLs.removeObject(forKey: path)
+                instance.lock.unlock()
             }
         }
     }

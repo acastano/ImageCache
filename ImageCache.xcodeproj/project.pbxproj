@@ -18,6 +18,7 @@
 		4125469121BD321700C775E1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4125468F21BD321700C775E1 /* LaunchScreen.storyboard */; };
 		4125469821BD33A700C775E1 /* ImageCache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4125466B21BD2BB300C775E1 /* ImageCache.framework */; };
 		4125469921BD33A700C775E1 /* ImageCache.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4125466B21BD2BB300C775E1 /* ImageCache.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		41C25BDD244C89DF001B31EC /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 41C25BDC244C89DF001B31EC /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,7 @@
 		4125468D21BD321700C775E1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4125469021BD321700C775E1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4125469221BD321700C775E1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		41C25BDC244C89DF001B31EC /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +84,7 @@
 		4125466121BD2BB300C775E1 = {
 			isa = PBXGroup;
 			children = (
+				41C25BDC244C89DF001B31EC /* README.md */,
 				4125466D21BD2BB300C775E1 /* ImageCache */,
 				4125468521BD321600C775E1 /* ImageCacheSample */,
 				4125466C21BD2BB300C775E1 /* Products */,
@@ -215,6 +218,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				41C25BDD244C89DF001B31EC /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -462,6 +466,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.andrescastano.ImageCacheSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -481,6 +486,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.andrescastano.ImageCacheSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;

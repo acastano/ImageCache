@@ -3,7 +3,7 @@ import UIKit
 public final class NetworkImageView: UIImageView {
     private var currentImageURL: URL?
 
-    public func loadImage(with image: String?, placeholder: String?) {
+    public func load(with image: String?, placeholder: String? = nil) {
         let imageURL = image != nil ? URL(string: image!) : nil
         if currentImageURL == nil || (currentImageURL == imageURL) == false || image == nil {
             cancelLoading(currentImageURL)

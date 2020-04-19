@@ -41,9 +41,8 @@ public final class CacheUtils: NSObject {
    public static func clearAfterThirtyDays() {
         DispatchQueue.global(qos: DispatchQoS.QoSClass.utility).async {
             let path = self.path.value
-            if let dirContents = try? FileManager.default.contentsOfDirectory(atPath: path) {
-                clearDirectoryContent(dirContents, path: path)
-            }
+            guard let dirContents = try? FileManager.default.contentsOfDirectory(atPath: path) else { return }
+            clearDirectoryContent(dirContents, path: path)
         }
     }
 
@@ -55,12 +54,11 @@ public final class CacheUtils: NSObject {
             let filePath = "\(path)/\(file)"
             let attr = try? FileManager.default.attributesOfItem(atPath: filePath)
 
-            if let date = attr?[FileAttributeKey.modificationDate] as? Date {
-                let difference = Date().timeIntervalSince(date)
-                if difference > daysToCleanCacheInSeconds {
-                    try? FileManager.default.removeItem(atPath: filePath)
-                }
-            }
+            guard let date = attr?[FileAttributeKey.modificationDate] as? Date else { return }
+            let difference = Date().timeIntervalSince(date)
+
+            guard difference > daysToCleanCacheInSeconds else { return }
+            try? FileManager.default.removeItem(atPath: filePath)
         }
     }
 }
