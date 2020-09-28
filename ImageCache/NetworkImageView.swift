@@ -5,18 +5,19 @@ public final class NetworkImageView: UIImageView {
 
     public func load(with image: String?, placeholder: String? = nil) {
         let imageURL = image != nil ? URL(string: image!) : nil
-        if currentImageURL == nil || (currentImageURL == imageURL) == false || image == nil {
-            cancelLoading(currentImageURL)
-            getImageFromCache(imageURL, placeholder: placeholder)
-        }
+
+        guard currentImageURL == nil || (currentImageURL == imageURL) == false || image == nil else { return }
+
+        cancelLoading(currentImageURL)
+        getImageFromCache(imageURL, placeholder: placeholder)
     }
 
     private func cancelLoading(_ currentImageURL :URL?) {
         image = nil
-        if let url = currentImageURL {
-            let cache = ImageCache.imageCache
-            cache.cancelImageForURL(url)
-        }
+        guard let url = currentImageURL else { return }
+
+        let cache = ImageCache.imageCache
+        cache.cancelImageForURL(url)
     }
 
     private func getImageFromCache(_ url: URL?, placeholder: String?) {
@@ -25,14 +26,10 @@ public final class NetworkImageView: UIImageView {
         let placeholdeImage = placeholder != nil ? UIImage(named: placeholder!) : nil
         image = placeholdeImage
 
-        if let url = url {
-            cache.loadImageWithURL(url) { [weak self] image, url in
-                if let instance = self {
-                    if url == instance.currentImageURL {
-                        instance.image = image == nil ? placeholdeImage : image
-                    }
-                }
-            }
+        guard let url = url else { return }
+        cache.loadImageWithURL(url) { [weak self] image, url in
+            guard let instance = self, url == instance.currentImageURL else { return }
+            instance.image = image == nil ? placeholdeImage : image
         }
     }
 }
