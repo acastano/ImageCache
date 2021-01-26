@@ -45,7 +45,7 @@
 		0F564326325636ED1CD469EF7BFF05E9 /* Pods-ImageCache_Example-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ImageCache_Example-Info.plist"; sourceTree = "<group>"; };
 		1F233B3E609C856D9FA7592C89AD3F56 /* Pods-ImageCache_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ImageCache_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		1FAF3235D531755B41ECCABF5285F210 /* Pods-ImageCache_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ImageCache_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		2485DA4C40A5B52FF8BAA670614EE8DA /* ImageCache.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = ImageCache.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		2485DA4C40A5B52FF8BAA670614EE8DA /* ACImageCache.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = ACImageCache.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		2F686723796A721F0B865EC45F2C07BE /* Pods-ImageCache_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-ImageCache_Tests-dummy.m"; sourceTree = "<group>"; };
 		38145C5144891F283B4D42270AF3492E /* Pods-ImageCache_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-ImageCache_Example.modulemap"; sourceTree = "<group>"; };
 		40E08C8FFEC4F8BB204F44EA304F88F2 /* Pods_ImageCache_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ImageCache_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -225,7 +225,7 @@
 		F91601696C4D4BE8B20E5D138924AB76 /* Pod */ = {
 			isa = PBXGroup;
 			children = (
-				2485DA4C40A5B52FF8BAA670614EE8DA /* ImageCache.podspec */,
+				2485DA4C40A5B52FF8BAA670614EE8DA /* ACImageCache.podspec */,
 				5DD83EFF70EEBEB9BDEFE1D0696638E5 /* LICENSE */,
 				666712F142865BE50A7F6853BDAC01C0 /* README.md */,
 			);

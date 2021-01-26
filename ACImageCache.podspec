@@ -7,7 +7,7 @@
 #
 
 Pod::Spec.new do |s|
-  s.name             = 'ImageCache'
+  s.name             = 'ACImageCache'
   s.version          = '1.0.4'
   s.summary          = 'ImageCache for iOS.'
 
