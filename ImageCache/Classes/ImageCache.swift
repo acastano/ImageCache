@@ -30,7 +30,7 @@ final class ImageCache: NSObject, URLSessionDelegate, ImageCacheProtocol {
         queue.maxConcurrentOperationCount = 100
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(ImageCache.removeAll),
-                                               name: NSNotification.Name.UIApplicationDidReceiveMemoryWarning,
+                                               name: UIApplication.didReceiveMemoryWarningNotification,
                                                object: nil)
     }
 
