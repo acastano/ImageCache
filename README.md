@@ -1,13 +1,29 @@
-Image Caching iOS
+# ImageCache
 
-To use the library 
+[![CI Status](https://img.shields.io/travis/Andrés Castaño/ImageCache.svg?style=flat)](https://travis-ci.org/Andrés Castaño/ImageCache)
+[![Version](https://img.shields.io/cocoapods/v/ImageCache.svg?style=flat)](https://cocoapods.org/pods/ImageCache)
+[![License](https://img.shields.io/cocoapods/l/ImageCache.svg?style=flat)](https://cocoapods.org/pods/ImageCache)
+[![Platform](https://img.shields.io/cocoapods/p/ImageCache.svg?style=flat)](https://cocoapods.org/pods/ImageCache)
 
-import ImageCache
+## Example
 
-Implement a NetworkImageView prgrammatically or as an IBOutlet. NetworkImageView is an subclass of UIImageView
+To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
-@IBOutlet weak var imageView: NetworkImageView!
+## Requirements
 
-to load the image pass the url as a string, the string is an optional in case the you are using a table or something that recycles if one item of the list doesn't a url pass nil 
+## Installation
 
-imageView.load(with: urlString, placeholder: nil)
+ImageCache is available through [CocoaPods](https://cocoapods.org). To install
+it, simply add the following line to your Podfile:
+
+```ruby
+pod 'ImageCache'
+```
+
+## Author
+
+Andrés Castaño, acastano@gmail.com
+
+## License
+
+ImageCache is available under the MIT license. See the LICENSE file for more info.

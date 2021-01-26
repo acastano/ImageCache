@@ -1,0 +1,16 @@
+PODS:
+  - ImageCache (0.1.0)
+
+DEPENDENCIES:
+  - ImageCache (from `../`)
+
+EXTERNAL SOURCES:
+  ImageCache:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  ImageCache: 89cfa8331a11beee0350c80060acf57960da8e1d
+
+PODFILE CHECKSUM: 80d6c250abe64e43b8127a58507a401a8cd9cafb
+
+COCOAPODS: 1.10.0
