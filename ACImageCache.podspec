@@ -22,6 +22,6 @@ ImageCache for iOS.
 
   s.ios.deployment_target = '9.0'
 
-  s.source_files = 'Sources/ImageCache/**/*'
+  s.source_files = 'Sources/ACImageCache/**/*'
   s.swift_version = '5.5'
 end
