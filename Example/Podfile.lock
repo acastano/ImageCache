@@ -1,16 +1,16 @@
 PODS:
-  - ImageCache (0.1.0)
+  - ACImageCache (1.0.6)
 
 DEPENDENCIES:
-  - ImageCache (from `../`)
+  - ACImageCache (from `../`)
 
 EXTERNAL SOURCES:
-  ImageCache:
+  ACImageCache:
     :path: "../"
 
 SPEC CHECKSUMS:
-  ImageCache: 89cfa8331a11beee0350c80060acf57960da8e1d
+  ACImageCache: d3e368666d8ed8b8221b271cf78a88e85890fee8
 
-PODFILE CHECKSUM: 80d6c250abe64e43b8127a58507a401a8cd9cafb
+PODFILE CHECKSUM: ac1a69bff5d67226d4153267f5fee43430c4076a
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.10.1

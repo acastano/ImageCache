@@ -3,7 +3,7 @@ use_frameworks!
 platform :ios, '9.0'
 
 target 'ImageCache_Example' do
-  pod 'ImageCache', :path => '../'
+  pod 'ACImageCache', :path => '../'
 
   target 'ImageCache_Tests' do
     inherit! :search_paths

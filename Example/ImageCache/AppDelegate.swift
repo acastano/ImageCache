@@ -1,6 +1,6 @@
 
 import UIKit
-import ImageCache
+import ACImageCache
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

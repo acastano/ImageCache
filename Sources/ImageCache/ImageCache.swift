@@ -66,15 +66,14 @@ final class ImageCache: NSObject, URLSessionDelegate, ImageCacheProtocol {
         }
 
         DispatchQueue.global(qos: .background).async { [weak self] in
-            if let instance = self {
-                instance.lock.lock()
-                let absoluteURL = url.absoluteString
-                if let operation = instance.downloadingURLs[absoluteURL] as? BlockOperation {
-                    operation.cancel()
-                }
-                instance.downloadingURLs.removeObject(forKey: absoluteURL)
-                instance.lock.unlock()
-            }
+			guard let instance = self else { return  }
+			instance.lock.lock()
+			let absoluteURL = url.absoluteString
+			if let operation = instance.downloadingURLs[absoluteURL] as? BlockOperation {
+				operation.cancel()
+			}
+			instance.downloadingURLs.removeObject(forKey: absoluteURL)
+			instance.lock.unlock()
         }
     }
 
@@ -95,18 +94,18 @@ final class ImageCache: NSObject, URLSessionDelegate, ImageCacheProtocol {
 
     private func processRemoteOperation(_ operation: Operation, url: URL, path: String, completion: ImageCompletion?) {
         remoteData(url, path: path) { [weak self] data in
-            if let instance = self, operation.isCancelled == false {
-                instance.lock.lock()
-                var image: UIImage?
-                if let data = data {
-                    image = instance.imageWithData(data, removeIfInvalid: path)
-                }
-                DispatchQueue.main.async {
-                    completion?(image, url)
-                }
-                instance.downloadingURLs.removeObject(forKey: path)
-                instance.lock.unlock()
-            }
+			guard let instance = self, operation.isCancelled == false else { return }
+
+			instance.lock.lock()
+			var image: UIImage?
+			if let data = data {
+				image = instance.imageWithData(data, removeIfInvalid: path)
+			}
+			DispatchQueue.main.async {
+				completion?(image, url)
+			}
+			instance.downloadingURLs.removeObject(forKey: path)
+			instance.lock.unlock()
         }
     }
 
@@ -124,10 +123,13 @@ final class ImageCache: NSObject, URLSessionDelegate, ImageCacheProtocol {
 
     private func localDataFromDisk(_ path: String) -> Data? {
         var data: Data?
-        let attributes = [FileAttributeKey.modificationDate: Date()]
+
+		let attributes = [FileAttributeKey.modificationDate: Date()]
         try? fileManager.setAttributes(attributes, ofItemAtPath: path)
-        let url = URL(fileURLWithPath: path)
+
+		let url = URL(fileURLWithPath: path)
         data = try? Data(contentsOf: url, options: .mappedIfSafe)
+
         return data
     }
 

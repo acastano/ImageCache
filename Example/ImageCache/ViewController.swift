@@ -1,5 +1,5 @@
 import UIKit
-import ImageCache
+import ACImageCache
 
 class ViewController: UIViewController {
     @IBOutlet weak var imageView: NetworkImageView!

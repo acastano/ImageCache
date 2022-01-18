@@ -11,9 +11,9 @@ final class Path {
         if var path = path, let bundleIdentifier = Bundle.main.bundleIdentifier {
             path += "/" + bundleIdentifier + "/" + cacheFolder
             try? FileManager.default.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil)
-            self.value = path
+            value = path
         } else {
-            self.value = ""
+            value = ""
         }
     }
 }

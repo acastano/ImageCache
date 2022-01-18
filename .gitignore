@@ -1,2 +1,8 @@
 ImageCache.xcodeproj/project.xcworkspace/xcuserdata
 ImageCache.xcodeproj/xcuserdata
+Example/Pods/Pods.xcodeproj/project.xcworkspace/xcuserdata
+.swiftpm/xcode/package.xcworkspace/xcuserdata
+Example/build
+Example/ImageCache.xcworkspace/xcuserdata
+Example/Pods
+.swiftpm/xcode/xcuserdata
