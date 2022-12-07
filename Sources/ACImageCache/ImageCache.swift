@@ -15,6 +15,8 @@ final class ImageCache: NSObject, URLSessionDelegate, ImageCacheProtocol {
     static let imageCache = ImageCache()
 
     private var testImageCache: ImageCacheProtocol?
+    
+    var tokenProvider: ImageCacheTokenProvider?
 
     static func startTesting(_ testImageCache: ImageCacheProtocol) {
         imageCache.testImageCache = testImageCache
@@ -77,6 +79,12 @@ final class ImageCache: NSObject, URLSessionDelegate, ImageCacheProtocol {
         }
     }
 
+    func removeImageFromCache(_ url: URL) {
+        let path = filePath(url.absoluteString)
+        memCache.removeObject(forKey: path as AnyObject)
+        try? fileManager.removeItem(atPath: path)
+    }
+
     // MARK: - Operation
 
     private func operationExecution(_ url: URL, path: String, completion: ImageCompletion?) {
@@ -134,16 +142,35 @@ final class ImageCache: NSObject, URLSessionDelegate, ImageCacheProtocol {
     }
 
     private func remoteData(_ url: URL, path: String, completion: @escaping ((Data?) -> Void)) {
-        let session = Foundation.URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
-        let task = session.dataTask(with: url, completionHandler: { data, response, _ in
-            var returnedData: Data?
-            if let response = response as? HTTPURLResponse, response.statusCode >= 200 && response.statusCode < 400 {
-                returnedData = data
-                try? returnedData?.write(to: URL(fileURLWithPath: path), options: [])
+        var urlRequest = URLRequest(url: url)
+        if tokenProvider != nil {
+            tokenProvider?.getToken { token in
+                if let token = token {
+                    urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+                }
+                urlRequest.setValue("*/*", forHTTPHeaderField: "Accept")
+                urlRequest.setValue("*/*", forHTTPHeaderField: "Content-Type")
+                Foundation.URLSession.shared.dataTask(with: urlRequest, completionHandler: { data, response, _ in
+                    var returnedData: Data?
+                    if let response = response as? HTTPURLResponse,
+                        response.statusCode >= 200 && response.statusCode < 400 {
+                        returnedData = data
+                        try? returnedData?.write(to: URL(fileURLWithPath: path), options: [])
+                    }
+                    completion(returnedData)
+                }).resume()
             }
-            completion(returnedData)
-        })
-        task.resume()
+        } else {
+            Foundation.URLSession.shared.dataTask(with: urlRequest, completionHandler: { data, response, _ in
+                var returnedData: Data?
+                if let response = response as? HTTPURLResponse,
+                    response.statusCode >= 200 && response.statusCode < 400 {
+                    returnedData = data
+                    try? returnedData?.write(to: URL(fileURLWithPath: path), options: [])
+                }
+                completion(returnedData)
+            }).resume()
+        }
     }
 
     private func localImage(_ path: String) -> UIImage? {
