@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "ACImageCache",
+        "repositoryURL": "https://github.com/acastano/ImageCache",
+        "state": {
+          "branch": "master",
+          "revision": "ca9eb79901a99b7b4dbcdda6c03ba18bebc54d0f",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}
