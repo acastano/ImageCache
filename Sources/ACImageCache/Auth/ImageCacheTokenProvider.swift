@@ -1,5 +1,5 @@
 import Foundation
 
-protocol ImageCacheTokenProvider {
+public protocol ImageCacheTokenProvider {
     func getToken(completion: @escaping ((String?) -> Void))
 }
