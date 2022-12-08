@@ -29,7 +29,7 @@ public final class ImageCache: NSObject, URLSessionDelegate, ImageCacheProtocol 
         imageCache.tokenProvider = tokenProvider
     }
 
-    static func removeTokenProvider() {
+    public static func removeTokenProvider() {
         imageCache.tokenProvider = nil
     }
 
