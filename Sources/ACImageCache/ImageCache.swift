@@ -3,7 +3,7 @@ import Foundation
 
 typealias ImageCompletion = (_ image: UIImage?, _ url: URL) -> Void
 
-final class ImageCache: NSObject, URLSessionDelegate, ImageCacheProtocol {
+public final class ImageCache: NSObject, URLSessionDelegate, ImageCacheProtocol {
 
     private let lock = NSLock()
     private let queue = OperationQueue()
@@ -15,6 +15,7 @@ final class ImageCache: NSObject, URLSessionDelegate, ImageCacheProtocol {
     static let imageCache = ImageCache()
 
     private var testImageCache: ImageCacheProtocol?
+    private var tokenProvider: ImageCacheTokenProvider?
 
     static func startTesting(_ testImageCache: ImageCacheProtocol) {
         imageCache.testImageCache = testImageCache
@@ -22,6 +23,14 @@ final class ImageCache: NSObject, URLSessionDelegate, ImageCacheProtocol {
 
     static func stopTesting() {
         imageCache.testImageCache = nil
+    }
+
+    public static func addTokenProvider(_ tokenProvider: ImageCacheTokenProvider) {
+        imageCache.tokenProvider = tokenProvider
+    }
+
+    public static func removeTokenProvider() {
+        imageCache.tokenProvider = nil
     }
 
     override init() {
@@ -75,6 +84,12 @@ final class ImageCache: NSObject, URLSessionDelegate, ImageCacheProtocol {
 			instance.downloadingURLs.removeObject(forKey: absoluteURL)
 			instance.lock.unlock()
         }
+    }
+
+    func removeImageFromCache(_ url: URL) {
+        let path = filePath(url.absoluteString)
+        memCache.removeObject(forKey: path as AnyObject)
+        try? fileManager.removeItem(atPath: path)
     }
 
     // MARK: - Operation
@@ -134,16 +149,32 @@ final class ImageCache: NSObject, URLSessionDelegate, ImageCacheProtocol {
     }
 
     private func remoteData(_ url: URL, path: String, completion: @escaping ((Data?) -> Void)) {
-        let session = Foundation.URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
-        let task = session.dataTask(with: url, completionHandler: { data, response, _ in
+        var urlRequest = URLRequest(url: url)
+        getToken { [weak self ] token in
+            if let token = token {
+                urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+            }
+            self?.loadURLRequest(urlRequest, path: path, completion: completion)
+        }
+    }
+
+    private func getToken(completion: @escaping ((String?) -> Void)) {
+        guard let tokenProvider = tokenProvider else { completion(nil); return }
+        tokenProvider.getToken { token in
+            completion(token)
+        }
+    }
+
+    private func loadURLRequest(_ urlRequest: URLRequest, path: String, completion: @escaping ((Data?) -> Void)) {
+        Foundation.URLSession.shared.dataTask(with: urlRequest, completionHandler: { data, response, _ in
             var returnedData: Data?
-            if let response = response as? HTTPURLResponse, response.statusCode >= 200 && response.statusCode < 400 {
+            if let response = response as? HTTPURLResponse,
+               response.statusCode >= 200 && response.statusCode < 400 {
                 returnedData = data
                 try? returnedData?.write(to: URL(fileURLWithPath: path), options: [])
             }
             completion(returnedData)
-        })
-        task.resume()
+        }).resume()
     }
 
     private func localImage(_ path: String) -> UIImage? {
