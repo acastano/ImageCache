@@ -8,11 +8,11 @@ public final class NetworkImage: ObservableObject {
     var imageUrl: String?
     var placeholderImage: String?
 
-    @Published var uiImage: UIImage?
+    @Published public var uiImage: UIImage?
 
     private var currentImageURL: URL?
 
-    init(imageUrl: String?, placeholderImage: String?) {
+    public init(imageUrl: String?, placeholderImage: String?) {
         self.imageUrl = imageUrl
         self.placeholderImage = placeholderImage
     }
