@@ -3,7 +3,7 @@ import SwiftUI
 import Combine
 
 @available(iOS 13.0, *)
-final class NetworkImage: ObservableObject {
+public final class NetworkImage: ObservableObject {
 
     var imageUrl: String?
     var placeholderImage: String?
