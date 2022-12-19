@@ -32,6 +32,10 @@ public final class ImageCache: NSObject, URLSessionDelegate, ImageCacheProtocol 
     public static func removeTokenProvider() {
         imageCache.tokenProvider = nil
     }
+    
+    public static func clearImageCache() {
+        imageCache.removeAll()
+    }
 
     override init() {
         super.init()
