@@ -3,37 +3,35 @@ import SwiftUI
 import Combine
 
 @available(iOS 13.0, *)
-public final class NetworkImage: ObservableObject {
+public final class NetworkImageModel: ObservableObject {
 
-    var imageUrl: String?
-    var placeholderImage: String?
+    @Published public var image: UIImage?
 
-    @Published public var uiImage: UIImage?
-
+    private let imageUrl: String?
+    private let placeholder: String?
     private var currentImageURL: URL?
 
-    public init(imageUrl: String?, placeholderImage: String?) {
-        self.imageUrl = imageUrl
-        self.placeholderImage = placeholderImage
+    public init(imageUrl: String?, placeholder: String? = nil) {
+         self.imageUrl = imageUrl
+         self.placeholder = placeholder
     }
 
     public func load() {
         let imageURL = imageUrl != nil ? URL(string: imageUrl!) : nil
 
-        guard currentImageURL == nil || (currentImageURL == imageURL) == false || uiImage == nil else { return }
+        guard currentImageURL == nil || (currentImageURL == imageURL) == false || image == nil else { return }
 
         cancelLoading(currentImageURL)
-        getImageFromCache(imageURL, placeholder: placeholderImage)
+        getImageFromCache(imageURL, placeholder: placeholder)
     }
 
     public func deleteCurrentImageFromCache() {
         guard let url = currentImageURL else { return }
-
         ImageCache.imageCache.removeImageFromCache(url)
     }
 
     private func cancelLoading(_ currentImageURL: URL?) {
-        self.uiImage = nil
+        image = nil
         guard let url = currentImageURL else { return }
 
         let cache = ImageCache.imageCache
@@ -44,12 +42,12 @@ public final class NetworkImage: ObservableObject {
         currentImageURL = url
         let cache = ImageCache.imageCache
         let placeholdeImage = placeholder != nil ? UIImage(named: placeholder!) : nil
-        uiImage = placeholdeImage
+        image = placeholdeImage
 
         guard let url = url else { return }
         cache.loadImageWithURL(url) { [weak self] image, url in
             guard let instance = self, url == instance.currentImageURL else { return }
-            instance.uiImage = image == nil ? placeholdeImage : image
+            instance.image = image == nil ? placeholdeImage : image
         }
     }
 }
