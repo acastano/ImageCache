@@ -32,7 +32,7 @@ public final class CacheUtils: NSObject {
         let query = url.query != nil ? url.query! : ""
 
         let urlString = String(format: "%@%@%@", host, path, query)
-        let doNotWant = CharacterSet(charactersIn: "/:.,")
+        let doNotWant = CharacterSet(charactersIn: "/:.,=")
         let charactersArray = urlString.components(separatedBy: doNotWant)
         let key = charactersArray.joined(separator: "")
         return key
