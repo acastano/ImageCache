@@ -19,6 +19,8 @@ final class Path {
 }
 
 public final class CacheUtils: NSObject {
+    private static let thirtyDaysInSeconds: TimeInterval = 2592000.0
+
     static var path: Path {
         struct Singleton {
             static let instance = Path()
@@ -42,14 +44,20 @@ public final class CacheUtils: NSObject {
         DispatchQueue.global(qos: DispatchQoS.QoSClass.utility).async {
             let path = self.path.value
             guard let dirContents = try? FileManager.default.contentsOfDirectory(atPath: path) else { return }
-            clearDirectoryContent(dirContents, path: path)
+            clearDirectoryContent(dirContents, path: path, time: thirtyDaysInSeconds)
         }
     }
 
-    private static func clearDirectoryContent(_ files: [String], path: String) {
-        let thirtyDaysInSeconds: TimeInterval = 2592000
-        let daysToCleanCacheInSeconds = thirtyDaysInSeconds
+    public static func clearCache() {
+        DispatchQueue.global(qos: DispatchQoS.QoSClass.utility).async {
+            let path = self.path.value
+            guard let dirContents = try? FileManager.default.contentsOfDirectory(atPath: path) else { return }
+            clearDirectoryContent(dirContents, path: path, time: 0)
+        }
+    }
 
+    private static func clearDirectoryContent(_ files: [String], path: String, time: TimeInterval) {
+        let daysToCleanCacheInSeconds = time
         for file in files {
             let filePath = "\(path)/\(file)"
             let attr = try? FileManager.default.attributesOfItem(atPath: filePath)

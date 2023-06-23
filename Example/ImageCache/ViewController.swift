@@ -11,4 +11,3 @@ class ViewController: UIViewController {
         imageView.load(with: urlString)
     }
 }
-

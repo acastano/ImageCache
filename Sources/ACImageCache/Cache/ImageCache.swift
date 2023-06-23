@@ -78,14 +78,14 @@ public final class ImageCache: NSObject, URLSessionDelegate, ImageCacheProtocol 
         }
 
         DispatchQueue.global(qos: .background).async { [weak self] in
-			guard let instance = self else { return  }
-			instance.lock.lock()
-			let absoluteURL = url.absoluteString
-			if let operation = instance.downloadingURLs[absoluteURL] as? BlockOperation {
-				operation.cancel()
-			}
-			instance.downloadingURLs.removeObject(forKey: absoluteURL)
-			instance.lock.unlock()
+            guard let instance = self else { return  }
+            instance.lock.lock()
+            let absoluteURL = url.absoluteString
+            if let operation = instance.downloadingURLs[absoluteURL] as? BlockOperation {
+                operation.cancel()
+            }
+            instance.downloadingURLs.removeObject(forKey: absoluteURL)
+            instance.lock.unlock()
         }
     }
 

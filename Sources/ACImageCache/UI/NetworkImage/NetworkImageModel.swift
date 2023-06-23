@@ -12,15 +12,14 @@ public final class NetworkImageModel: ObservableObject {
     private var currentImageURL: URL?
 
     public init(imageUrl: String?, placeholder: String? = nil) {
-         self.imageUrl = imageUrl
-         self.placeholder = placeholder
+        self.imageUrl = imageUrl
+        self.placeholder = placeholder
     }
 
     public func load() {
         let imageURL = imageUrl != nil ? URL(string: imageUrl!) : nil
-
         guard currentImageURL == nil || (currentImageURL == imageURL) == false || image == nil else { return }
-
+        
         cancelLoading(currentImageURL)
         getImageFromCache(imageURL, placeholder: placeholder)
     }
